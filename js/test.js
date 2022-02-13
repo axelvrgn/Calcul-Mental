@@ -14,6 +14,7 @@ class Calcul {
 var calculs = [];
 const operatorsList = ['+', '-', 'x', '/'];
 const maxQuestions = 10;
+const difficultyList = ['facile', 'moyen', 'difficile'];
 
 let maxNumber = 0;
 let randomNumberMap = new Map([]);
@@ -22,6 +23,8 @@ let answerMap = new Map([]);
 let choicesMap = new Map([]);
 
 function generateCalculs(thedifficulty){
+
+console.log("ici"+thedifficulty);
 
 switch(thedifficulty){
   case "facile":
@@ -41,8 +44,8 @@ switch(thedifficulty){
 //Boucle permettant de générer n couples de nombres aléatoires et les insérer dans un dictionnaire : randomNumberMap.
 for(let i = 0; i < maxQuestions; i++){
   if(thedifficulty == "difficile"){
-    let n1 = Math.floor(Math.random() * maxNumber) / 100;
-    let n2 = Math.floor(Math.random() * maxNumber) / 100;
+    let n1 = Math(Math.random() * maxNumber);
+    let n2 = Math(Math.random() * maxNumber);
     randomNumberMap.set(i, [n1, n2]);
   }
   else{
@@ -90,18 +93,10 @@ for(let i = 0; i < maxQuestions; i++){
 
 //Boucle permettant de générer 3 propositions aléatoires pour chaque calcul, puis les insérer avec la réponse dans un dictionnaire.
 for(let i = 0; i < maxQuestions; i++){
-  if(thedifficulty == "difficile"){
-    let c1 = Math.floor(Math.random() * maxNumber) / 100;
-    let c2 = Math.floor(Math.random() * maxNumber) / 100;
-    let c3 = Math.floor(Math.random() * maxNumber) / 100;
-    choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
-  }
-  else{
-    let c1 = Math.floor(Math.random() * maxNumber);
-    let c2 = Math.floor(Math.random() * maxNumber);
-    let c3 = Math.floor(Math.random() * maxNumber);
-    choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
-  }
+  let c1 = Math.floor(Math.random() * maxNumber);
+  let c2 = Math.floor(Math.random() * maxNumber);
+  let c3 = Math.floor(Math.random() * maxNumber);
+  choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
 }
 
 //Boucle permettant de construire les calculs en fonction du nombre de questions.
@@ -169,6 +164,7 @@ const display = {
       <h3> Votre score est de : ${quiz.score} / ${quiz.calculs.length}</h3>`;
     this.elementShown("quiz", endQuizHTML);
     
+    
     //condition permettant d'attribuer la couleur rouge quand le résultat est en dessous de la moyenne et vers quand il est au dessus.
     if(quiz.score > (quiz.calculs.length/2)){
         document.getElementById("quiz").style.color = "#26F76B";
@@ -181,16 +177,16 @@ const display = {
     startQuiz = `
       <h1 class="title-levels">Choisir un niveau</h1>
       <button id="diff0" class="btnlevel">        
-        <p id="level0"></p>
-      </button>
+                        <p id="level0"></p>
+                    </button>
 
-      <button id="diff1" class="btnlevel">
-        <p id="level1"></p>
-      </button>
-      
-      <button id="diff2" class="btnlevel">
-        <p id="level2"></p>
-      </button>`;
+                    <button id="diff1" class="btnlevel">
+                        <p id="level1"></p>
+                    </button>
+                    
+                    <button id="diff2" class="btnlevel">
+                        <p id="level2"></p>
+                    </button>`;
     this.elementShown("levelRequest", startQuiz);
   },
   //Mise en forme du calcul en fonction de l'index
@@ -265,7 +261,6 @@ let quiz = new Quiz();
 quizApp();
 console.log(calculs);
 console.log(quiz);
-
 
 
 

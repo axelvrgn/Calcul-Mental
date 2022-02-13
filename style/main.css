@@ -59,4 +59,25 @@ button:hover{
     cursor: pointer;
 }
 
+.levels{
+    margin-top: 8vh;
+    width: 80%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
 
+.title-levels{
+    width: 100%;
+    margin-bottom: 5vh;
+}
+
+.btnlevel{
+    width: auto;
+    padding-left: 5ch;
+    padding-right: 5ch;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(61, 61, 61);
+    color: white;
+}
