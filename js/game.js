@@ -1,3 +1,11 @@
+
+/*Classe Calcul avec pour attributs :
+n1: le premmier nombre de l'opération
+n2: le second nombre de l'opération
+operateur: l'opérateur
+choices: propositions de réponse au calcul
+answer: la réponse au calcul
+*/
 class Calcul {
     constructor(n1, n2, operator, choices, answer) {
     this.n1 = n1;
@@ -22,7 +30,7 @@ let answerMap = new Map([]);
 let choicesMap = new Map([]);
 
 function generateCalculs(thedifficulty){
-
+//Switch permettant de définir la variable maxNumber en fonction de la dificulté.
   switch(thedifficulty){
     case "facile":
       maxNumber = 20;
@@ -34,8 +42,7 @@ function generateCalculs(thedifficulty){
       maxNumber = 200;
       break;
     default:
-      console.log("error with difficulty");
-
+      console.log("error with thedifficulty");
   }
 
   //Boucle permettant de générer n couples de nombres aléatoires et les insérer dans un dictionnaire : randomNumberMap.
@@ -118,6 +125,14 @@ function generateCalculs(thedifficulty){
   return calculs;
 }
 
+/*Classe Quiz avec pour attributs :
+  score: initialisé à 0
+  calculs: la liste de calculs initialisé à vide
+  currenCalculIndex: l'index du calcul de départ initialisé à 0
+  isStarted: booléen initialisé à false signifiant que le jeu n'a pas commencé.
+  difficulty: difficulté du quiz initialisé à vide.
+*/
+
 class Quiz {
   constructor() {
     this.score = 0;
@@ -126,6 +141,7 @@ class Quiz {
     this.isStarted = false;
     this.difficulty = "";
   }
+  //méthode qui permet de vérifier si la partie a commencée.
   noStart() {
     return this.currentCalculIndex == 0 && this.isStarted == false ;
   }
@@ -148,6 +164,7 @@ class Quiz {
         document.getElementById("guess" + i).disabled = true;
     }
   }
+  //methode permettant de définir la difficulté et passer le booléen à true lorsqu'elle est appelée.
   guessDiff(level) {
     this.difficulty = level;
     this.isStarted = true;
