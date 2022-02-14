@@ -23,92 +23,99 @@ let choicesMap = new Map([]);
 
 function generateCalculs(thedifficulty){
 
-switch(thedifficulty){
-  case "facile":
-    maxNumber = 20;
-    break;
-  case "moyen":
-    maxNumber = 100;
-    break;
-  case "difficile":
-    maxNumber = 200;
-    break;
-  default:
-    console.log("error with difficulty");
-
-}
-
-//Boucle permettant de générer n couples de nombres aléatoires et les insérer dans un dictionnaire : randomNumberMap.
-for(let i = 0; i < maxQuestions; i++){
-  if(thedifficulty == "difficile"){
-    let n1 = Math.floor(Math.random() * maxNumber) / 100;
-    let n2 = Math.floor(Math.random() * maxNumber) / 100;
-    randomNumberMap.set(i, [n1, n2]);
-  }
-  else{
-    let n1 = Math.floor(Math.random() * maxNumber);
-    let n2 = Math.floor(Math.random() * maxNumber);
-    randomNumberMap.set(i, [n1, n2]);
-  }
-}
-                            
-//Boucle permettant de générer n opérateurs aléatoires à partir de la liste operatorsList['+', '-', 'x'] puis les insérer dans un dictionnaire : randomOperatorMap.
-for(let i = 0; i < maxQuestions; i++){
-  if(thedifficulty == "difficile"){
-    let op = Math.floor(Math.random() * (4 - 0) + 0);
-    randomOperatorMap.set(i, op);
-  }
-  else if(thedifficulty == "moyen"){
-    let op = Math.floor(Math.random() * (3 - 0) + 0);
-    randomOperatorMap.set(i, op);
-  }
-  else{
-    let op = Math.floor(Math.random() * (2 - 0) + 0);
-    randomOperatorMap.set(i, op);
-  }
-}
-
-//Boucle permettant de calculer les réponses de chaque calcul généré puis les insérer dans un dictionnaire : answerMap.
-for(let i = 0; i < maxQuestions; i++){
-  switch (operatorsList[randomOperatorMap.get(i)]) {
-    case '+' :
-      answerMap.set(i, [randomNumberMap.get(i)[0] + randomNumberMap.get(i)[1]]);
+  switch(thedifficulty){
+    case "facile":
+      maxNumber = 20;
       break;
-    case '-' :
-      answerMap.set(i, [randomNumberMap.get(i)[0] - randomNumberMap.get(i)[1]]);
+    case "moyen":
+      maxNumber = 100;
       break;
-    case 'x' :
-      answerMap.set(i, [randomNumberMap.get(i)[0] * randomNumberMap.get(i)[1]]);
+    case "difficile":
+      maxNumber = 200;
       break;
-    case '/':
-      answerMap.set(i, [randomNumberMap.get(i)[0] / randomNumberMap.get(i)[1]]);
-      break;
-    default :
-      console.log('error with operator');
-  }
-}
+    default:
+      console.log("error with difficulty");
 
-//Boucle permettant de générer 3 propositions aléatoires pour chaque calcul, puis les insérer avec la réponse dans un dictionnaire.
-for(let i = 0; i < maxQuestions; i++){
-  if(thedifficulty == "difficile"){
-    let c1 = Math.floor(Math.random() * maxNumber) / 100;
-    let c2 = Math.floor(Math.random() * maxNumber) / 100;
-    let c3 = Math.floor(Math.random() * maxNumber) / 100;
-    choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
   }
-  else{
-    let c1 = Math.floor(Math.random() * maxNumber);
-    let c2 = Math.floor(Math.random() * maxNumber);
-    let c3 = Math.floor(Math.random() * maxNumber);
-    choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
-  }
-}
 
-//Boucle permettant de construire les calculs en fonction du nombre de questions.
-for(let i = 0; i < maxQuestions; i++){
-  calculs.push(new Calcul(randomNumberMap.get(i)[0], randomNumberMap.get(i)[1], operatorsList[randomOperatorMap.get(i)], choicesMap.get(i), answerMap.get(i)[0]));
-}
-return calculs;
+  //Boucle permettant de générer n couples de nombres aléatoires et les insérer dans un dictionnaire : randomNumberMap.
+  for(let i = 0; i < maxQuestions; i++){
+    //si la difficulté est "difficile" alors les nombres aléatoires sont des chiffres à deux décimales.
+    if(thedifficulty == "difficile"){
+      let n1 = Math.floor(Math.random() * maxNumber) / 100;
+      let n2 = Math.floor(Math.random() * maxNumber) / 100;
+      randomNumberMap.set(i, [n1, n2]);
+    }
+    //sinon ce sont des nombres entiers.
+    else{
+      let n1 = Math.floor(Math.random() * maxNumber);
+      let n2 = Math.floor(Math.random() * maxNumber);
+      randomNumberMap.set(i, [n1, n2]);
+    }
+  }
+                              
+  //Boucle permettant de générer n opérateurs aléatoires à partir de la liste operatorsList['+', '-', 'x', '/'] puis les insérer dans un dictionnaire : randomOperatorMap.
+  for(let i = 0; i < maxQuestions; i++){
+    //si la difficulté est "difficile" alors on génère des opérateurs aléatoires à partir de la liste complète de operatorList.
+    if(thedifficulty == "difficile"){
+      let op = Math.floor(Math.random() * (4 - 0) + 0);
+      randomOperatorMap.set(i, op);
+    }
+    //si la difficulté est "moyen" alors on génère des opérateurs aléatoires à partir de la liste réduite de operatorList : +, - , x.
+    else if(thedifficulty == "moyen"){
+      let op = Math.floor(Math.random() * (3 - 0) + 0);
+      randomOperatorMap.set(i, op);
+    }
+    //si la difficulté est "facile" alors on génère des opérateurs aléatoires à partir de la liste très réduite de operatorList : + et -.
+    else{
+      let op = Math.floor(Math.random() * (2 - 0) + 0);
+      randomOperatorMap.set(i, op);
+    }
+  }
+
+  //Boucle permettant de calculer les réponses de chaque calcul généré puis les insérer dans un dictionnaire : answerMap.
+  for(let i = 0; i < maxQuestions; i++){
+    switch (operatorsList[randomOperatorMap.get(i)]) {
+      case '+' :
+        answerMap.set(i, [randomNumberMap.get(i)[0] + randomNumberMap.get(i)[1]]);
+        break;
+      case '-' :
+        answerMap.set(i, [randomNumberMap.get(i)[0] - randomNumberMap.get(i)[1]]);
+        break;
+      case 'x' :
+        answerMap.set(i, [randomNumberMap.get(i)[0] * randomNumberMap.get(i)[1]]);
+        break;
+      case '/':
+        answerMap.set(i, [randomNumberMap.get(i)[0] / randomNumberMap.get(i)[1]]);
+        break;
+      default :
+        console.log('error with operator');
+    }
+  }
+
+  //Boucle permettant de générer 3 propositions aléatoires pour chaque calcul, puis les insérer avec la réponse dans un dictionnaire.
+  for(let i = 0; i < maxQuestions; i++){
+    //si la difficulté est "difficile" alors on génère trois chiffres aléatoires avec deux décimales.
+    if(thedifficulty == "difficile"){
+      let c1 = Math.floor(Math.random() * maxNumber) / 100;
+      let c2 = Math.floor(Math.random() * maxNumber) / 100;
+      let c3 = Math.floor(Math.random() * maxNumber) / 100;
+      choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
+    }
+    //sinon on génère trois entiers aléatoires.
+    else{
+      let c1 = Math.floor(Math.random() * maxNumber);
+      let c2 = Math.floor(Math.random() * maxNumber);
+      let c3 = Math.floor(Math.random() * maxNumber);
+      choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
+    }
+  }
+
+  //Boucle permettant de construire les calculs en fonction du nombre de questions.
+  for(let i = 0; i < maxQuestions; i++){
+    calculs.push(new Calcul(randomNumberMap.get(i)[0], randomNumberMap.get(i)[1], operatorsList[randomOperatorMap.get(i)], choicesMap.get(i), answerMap.get(i)[0]));
+  }
+  return calculs;
 }
 
 class Quiz {
