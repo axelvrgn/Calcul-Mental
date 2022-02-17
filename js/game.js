@@ -20,6 +20,7 @@ class Calcul {
 }
 
 var calculs = [];
+var numbersArray = [];
 const operatorsList = ['+', '-', 'x', '/'];
 const maxQuestions = 10;
 
@@ -30,6 +31,7 @@ let answerMap = new Map([]);
 let choicesMap = new Map([]);
 
 function generateCalculs(thedifficulty){
+
 //Switch permettant de définir la variable maxNumber en fonction de la dificulté.
   switch(thedifficulty){
     case "facile":
@@ -45,19 +47,29 @@ function generateCalculs(thedifficulty){
       console.log("error with thedifficulty");
   }
 
-  //Boucle permettant de générer n couples de nombres aléatoires et les insérer dans un dictionnaire : randomNumberMap.
-  for(let i = 0; i < maxQuestions; i++){
-    //si la difficulté est "difficile" alors les nombres aléatoires sont des chiffres à deux décimales.
-    if(thedifficulty == "difficile"){
+  if(thedifficulty == "difficile"){
+    for(let i = 0; i < maxQuestions; i++){
+      //si la difficulté est "difficile" alors les nombres aléatoires sont des chiffres à deux décimales.
       let n1 = Math.floor(Math.random() * maxNumber) / 100;
       let n2 = Math.floor(Math.random() * maxNumber) / 100;
       randomNumberMap.set(i, [n1, n2]);
     }
-    //sinon ce sont des nombres entiers.
-    else{
-      let n1 = Math.floor(Math.random() * maxNumber);
-      let n2 = Math.floor(Math.random() * maxNumber);
-      randomNumberMap.set(i, [n1, n2]);
+  }
+  //sinon on utilise des entiers
+  else{
+    //contruction d'une liste de 0 à maxQuestions x 2
+    for(let i = 0; i < maxQuestions*2; i++){
+      numbersArray.push(i);
+    }
+    //mélange de la liste
+    for (let i = numbersArray.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i+1));
+      [numbersArray[i], numbersArray[j]] = [numbersArray[j], numbersArray[i]];
+    }
+    console.log(numbersArray);
+    for(let i = 0; i < maxQuestions; i++){
+      let j = i*2;
+      randomNumberMap.set(i, [numbersArray[j], numbersArray[j+1]]);
     }
   }
                               
@@ -124,6 +136,7 @@ function generateCalculs(thedifficulty){
   }
   return calculs;
 }
+
 
 /*Classe Quiz avec pour attributs :
   score: initialisé à 0
@@ -289,7 +302,4 @@ let quiz = new Quiz();
 quizApp();
 console.log(calculs);
 console.log(quiz);
-
-
-
 
