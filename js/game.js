@@ -21,6 +21,7 @@ class Calcul {
 
 var calculs = [];
 var numbersArray = [];
+var choicesArray = [];
 const operatorsList = ['+', '-', 'x', '/'];
 const maxQuestions = 10;
 
@@ -57,7 +58,7 @@ function generateCalculs(thedifficulty){
   }
   //sinon on utilise des entiers
   else{
-    //contruction d'une liste de 0 à maxQuestions x 2
+    //construction d'une liste de 0 à maxQuestions x 2
     for(let i = 0; i < maxQuestions*2; i++){
       numbersArray.push(i);
     }
@@ -66,7 +67,7 @@ function generateCalculs(thedifficulty){
       let j = Math.floor(Math.random() * (i+1));
       [numbersArray[i], numbersArray[j]] = [numbersArray[j], numbersArray[i]];
     }
-    console.log(numbersArray);
+    //Insertion dans la map du couple de chiffres aléatoires.
     for(let i = 0; i < maxQuestions; i++){
       let j = i*2;
       randomNumberMap.set(i, [numbersArray[j], numbersArray[j+1]]);
@@ -123,10 +124,20 @@ function generateCalculs(thedifficulty){
     }
     //sinon on génère trois entiers aléatoires.
     else{
-      let c1 = Math.floor(Math.random() * maxNumber);
-      let c2 = Math.floor(Math.random() * maxNumber);
-      let c3 = Math.floor(Math.random() * maxNumber);
-      choicesMap.set(i, [c1, c2, c3, answerMap.get(i)[0]]);
+      //construction d'une liste de 0 à maxQuestions x 2
+      for(let i = 0; i < maxQuestions*2; i++){
+        choicesArray.push(i);
+      }
+      //mélange de la liste
+      for (let i = choicesArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i+1));
+        [choicesArray[i], choicesArray[j]] = [choicesArray[j], choicesArray[i]];
+      }
+      //Insertion dans la map du couple de chiffres aléatoires.
+      for(let i = 0; i < maxQuestions; i++){
+        let j = i*3;
+        choicesMap.set(i, [choicesArray[j], choicesArray[j+1], choicesArray[j+2], answerMap.get(i)[0]]);
+      }
     }
   }
 
